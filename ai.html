@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KreyaConnect — AI-Powered Meetings</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#080d1a;--bg2:#0e1525;--bg3:#141c30;--card:#111827;
+  --border:rgba(99,102,241,0.2);--border2:rgba(99,102,241,0.4);
+  --accent:#6366f1;--accent2:#8b5cf6;--blue:#3b82f6;
+  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
+  --green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --r:12px;--rs:8px;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+button{cursor:pointer;font-family:'Outfit',sans-serif;}
+
+/* ===== LANDING ===== */
+#s-landing{background:var(--bg);position:relative;overflow:hidden;}
+.glow1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,0.12) 0%,transparent 70%);top:-300px;left:50%;transform:translateX(-50%);pointer-events:none;}
+.glow2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.08) 0%,transparent 70%);bottom:-200px;right:-100px;pointer-events:none;}
+.glow3{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.06) 0%,transparent 70%);bottom:100px;left:-100px;pointer-events:none;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;position:relative;z-index:10;border-bottom:1px solid rgba(99,102,241,0.1);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-text{font-size:22px;font-weight:800;background:linear-gradient(135deg,#6366f1,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-r{display:flex;gap:10px;align-items:center;}
+
+.btn{padding:10px 22px;border-radius:var(--rs);border:none;font-size:14px;font-weight:500;transition:all 0.2s;}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-ghost:hover{background:var(--bg3);color:var(--text);}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-sm{padding:8px 16px;font-size:13px;}
+.btn-lg{padding:14px 32px;font-size:16px;border-radius:var(--r);}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);}
+.btn-outline:hover{background:var(--bg3);}
+.btn-red{background:var(--red);color:white;}
+.btn-red:hover{opacity:0.9;}
+
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 40px;position:relative;z-index:5;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:100px;padding:6px 18px;font-size:13px;color:var(--accent);margin-bottom:28px;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero h1{font-size:clamp(42px,7vw,88px);font-weight:800;line-height:1.05;margin-bottom:22px;letter-spacing:-2px;}
+.grad{background:linear-gradient(135deg,#818cf8,#a78bfa,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:18px;color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:44px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:60px;}
+
+.home-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:500px;}
+.home-card h3{font-size:20px;font-weight:700;margin-bottom:6px;}
+.home-card > p{font-size:14px;color:var(--text2);margin-bottom:24px;}
+.input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:13px 16px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
+.input:focus{border-color:var(--accent);}
+.input::placeholder{color:var(--text3);}
+.row{display:flex;gap:10px;margin-bottom:20px;}
+.row .input{flex:1;}
+.divider{display:flex;align-items:center;gap:12px;color:var(--text3);font-size:13px;margin:20px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.join-row{display:flex;gap:10px;}
+.join-row .input{flex:1;}
+
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;width:100%;max-width:980px;margin-top:60px;}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.feat-ic{font-size:28px;margin-bottom:12px;}
+.feat h4{font-size:15px;font-weight:600;margin-bottom:6px;}
+.feat p{font-size:13px;color:var(--text2);line-height:1.5;}
+
+footer{text-align:center;padding:20px;color:var(--text3);font-size:13px;border-top:1px solid var(--border);position:relative;z-index:5;}
+
+/* ===== PRE-JOIN ===== */
+#s-prejoin{background:var(--bg);align-items:center;justify-content:center;padding:40px 20px;}
+.pj-wrap{display:flex;gap:44px;align-items:flex-start;max-width:900px;width:100%;}
+.pj-video-box{flex:1.2;background:#000;border-radius:20px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid var(--border);}
+#pjv{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.pj-no-cam{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:var(--text2);}
+.pj-no-cam .big-av{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;}
+.pj-ctrls{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:12px;}
+.ic-btn{width:46px;height:46px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:20px;transition:all 0.2s;}
+.ic-btn-on{background:rgba(255,255,255,0.18);color:white;backdrop-filter:blur(4px);}
+.ic-btn-on:hover{background:rgba(255,255,255,0.28);}
+.ic-btn-off{background:var(--red);color:white;}
+.ic-btn-off:hover{opacity:0.85;}
+
+.pj-panel{width:300px;display:flex;flex-direction:column;gap:22px;}
+.pj-panel h2{font-size:26px;font-weight:800;}
+.pj-panel .sub{color:var(--text2);font-size:14px;line-height:1.5;}
+.pj-meeting-id{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;padding:8px 14px;}
+label{display:block;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;}
+
+/* ===== MEETING ===== */
+#s-meeting{display:none;flex-direction:row;height:100vh;overflow:hidden;}
+#s-meeting.active{display:flex;}
+.m-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+.m-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;}
+.m-logo{font-size:16px;font-weight:800;background:linear-gradient(135deg,#6366f1,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.m-center{display:flex;align-items:center;gap:12px;}
+.m-link{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3);padding:5px 12px;background:var(--bg3);border-radius:6px;cursor:pointer;transition:color 0.2s;}
+.m-link:hover{color:var(--accent);}
+.m-timer{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--text2);background:var(--bg3);padding:5px 14px;border-radius:6px;}
+.m-rec{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--red);background:rgba(239,68,68,0.1);padding:5px 12px;border-radius:6px;}
+.rec-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 1.5s infinite;}
+
+.video-grid{flex:1;display:grid;padding:12px;gap:10px;overflow:hidden;align-content:center;}
+.vt{background:#0a1020;border-radius:16px;position:relative;overflow:hidden;border:2px solid transparent;transition:border-color 0.3s;}
+.vt.speaking{border-color:var(--green) !important;}
+.vt.you{border-color:var(--accent);}
+.vt video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.vt-overlay{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,0.75));display:flex;align-items:center;justify-content:space-between;}
+.vt-name{font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;}
+.vt-icons{display:flex;gap:6px;font-size:14px;}
+.av{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.av-circle{width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;}
+.av-name{font-size:14px;color:var(--text2);}
+.vt-reaction{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:52px;animation:rfloat 2.5s ease-out forwards;pointer-events:none;z-index:20;}
+@keyframes rfloat{0%{opacity:1;transform:translate(-50%,-60%) scale(0.8);}30%{transform:translate(-50%,-60%) scale(1.2);}100%{opacity:0;transform:translate(-50%,-200%) scale(1);}}
+.hand-ind{position:absolute;top:12px;right:12px;font-size:26px;animation:hbounce 1s ease-in-out infinite;}
+@keyframes hbounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* Video backgrounds */
+.vbg{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.vbg.space{background:radial-gradient(ellipse at 30% 40%,#1a0a4e,#070312);}
+.vbg.space::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 15% 25%,rgba(255,255,255,0.9) 1px,transparent 1px),radial-gradient(circle at 75% 15%,rgba(255,255,255,0.8) 1px,transparent 1px),radial-gradient(circle at 45% 65%,rgba(255,255,255,0.6) 1px,transparent 1px),radial-gradient(circle at 85% 55%,rgba(200,200,255,0.7) 1px,transparent 1px),radial-gradient(circle at 30% 80%,rgba(255,255,255,0.5) 1px,transparent 1px),radial-gradient(circle at 60% 35%,rgba(255,200,255,0.8) 1px,transparent 1px),radial-gradient(circle at 10% 50%,rgba(255,255,255,0.9) 1px,transparent 1px),radial-gradient(circle at 90% 30%,rgba(200,255,200,0.6) 1px,transparent 1px);background-size:120px 120px,180px 180px,100px 100px,150px 150px,80px 80px,200px 200px,90px 90px,160px 160px;}
+.vbg.nature{background:linear-gradient(to bottom,#2196f3 0%,#64b5f6 30%,#a5d6a7 30%,#66bb6a 55%,#8d6e63 55%,#795548 70%,#6d4c41 100%);}
+.vbg.office{background:linear-gradient(to bottom,#eceff1 0%,#cfd8dc 50%,#b0bec5 100%);}
+
+/* Controls */
+.controls{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:var(--bg2);border-top:1px solid var(--border);flex-shrink:0;position:relative;}
+.c-left{display:flex;align-items:center;gap:8px;min-width:180px;}
+.c-center{display:flex;align-items:center;gap:10px;}
+.c-right{display:flex;align-items:center;gap:8px;min-width:180px;justify-content:flex-end;}
+
+.cb{width:54px;height:54px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:22px;transition:all 0.2s;position:relative;}
+.cb-n{background:rgba(255,255,255,0.08);color:var(--text);}
+.cb-n:hover{background:rgba(255,255,255,0.15);}
+.cb-a{background:rgba(99,102,241,0.2);color:var(--accent);}
+.cb-a:hover{background:rgba(99,102,241,0.3);}
+.cb-off{background:rgba(239,68,68,0.2);color:var(--red);}
+.cb-off:hover{background:rgba(239,68,68,0.3);}
+.cb-end{background:var(--red);color:white;border-radius:28px;width:auto;padding:0 22px;font-size:15px;font-weight:600;gap:6px;}
+.cb-end:hover{opacity:0.9;}
+.cb-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text3);white-space:nowrap;}
+
+.react-pop{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:10px 14px;display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.react-pop.show{opacity:1;pointer-events:all;}
+.rbtn{background:none;border:none;font-size:30px;padding:6px;border-radius:10px;transition:all 0.15s;}
+.rbtn:hover{background:rgba(255,255,255,0.1);transform:scale(1.3);}
+
+/* Side panel */
+.side-panel{width:0;overflow:hidden;transition:width 0.3s;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;}
+.side-panel.open{width:340px;}
+.ptabs{display:flex;border-bottom:1px solid var(--border);}
+.ptab{flex:1;padding:13px 8px;text-align:center;font-size:13px;font-weight:500;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all 0.2s;}
+.ptab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.pcontent{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.pcontent.on{display:flex;}
+
+/* Chat */
+.msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:14px;}
+.msg-author{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.msg-you .msg-author{color:var(--accent2);}
+.msg-bubble{font-size:14px;background:var(--bg3);padding:10px 14px;border-radius:12px 12px 12px 3px;line-height:1.5;display:inline-block;max-width:100%;}
+.msg-you .msg-bubble{background:rgba(99,102,241,0.15);border-radius:12px 12px 3px 12px;}
+.msg-time{font-size:11px;color:var(--text3);margin-top:4px;}
+.chat-in{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.chat-in .input{flex:1;padding:10px 14px;}
+.send-btn{width:40px;height:40px;border-radius:var(--rs);background:var(--accent);color:white;border:none;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.send-btn:hover{opacity:0.85;}
+
+/* Participants */
+.plist{flex:1;overflow-y:auto;padding:10px;}
+.p-header{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;}
+.p-count{font-size:13px;color:var(--text2);}
+.pitem{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;transition:background 0.15s;}
+.pitem:hover{background:var(--bg3);}
+.pav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex-shrink:0;}
+.p-info{flex:1;}
+.p-name{font-size:14px;}
+.p-role{font-size:12px;color:var(--text3);}
+.p-icons{display:flex;gap:6px;font-size:14px;}
+
+/* AI Panel */
+.ai-inner{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:16px;}
+.ai-sec-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;}
+.transcript-box{background:var(--bg3);border-radius:12px;padding:14px;font-size:13px;line-height:1.7;color:var(--text2);max-height:200px;overflow-y:auto;border:1px solid var(--border);}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.agen{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;color:var(--text);font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:7px;text-align:left;}
+.agen:hover{border-color:var(--accent);background:rgba(99,102,241,0.07);}
+.agen .ai-icon{font-size:16px;}
+.ai-result{background:var(--bg3);border:1px solid rgba(99,102,241,0.35);border-radius:12px;padding:14px;font-size:13px;line-height:1.7;color:var(--text2);max-height:320px;overflow-y:auto;display:none;}
+.ai-result.show{display:block;}
+.ai-result-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ai-result-title{font-size:13px;font-weight:600;color:var(--accent);}
+.copy-btn{background:none;border:none;color:var(--text3);font-size:12px;padding:4px 8px;border-radius:4px;font-family:'Outfit',sans-serif;cursor:pointer;transition:color 0.2s;}
+.copy-btn:hover{color:var(--text);}
+.ai-loading{display:flex;align-items:center;gap:8px;color:var(--text3);font-size:13px;padding:14px;background:var(--bg3);border-radius:12px;}
+.spinner{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);border-top-color:var(--accent);animation:spin 0.7s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ai-loading.hidden{display:none;}
+
+/* Modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:2000;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.overlay.show{opacity:1;pointer-events:all;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;width:420px;max-width:92vw;max-height:90vh;overflow-y:auto;}
+.modal h3{font-size:20px;font-weight:700;margin-bottom:8px;}
+.modal .sub{font-size:14px;color:var(--text2);margin-bottom:22px;line-height:1.5;}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;}
+.modal label{margin-bottom:6px;font-size:13px;color:var(--text2);}
+.bg-options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px;}
+.bgo{aspect-ratio:16/9;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2);}
+.bgo.sel{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,0.2);}
+.bgo-none{background:var(--bg3);}
+.bgo-space{background:radial-gradient(ellipse at 30% 40%,#1a0a4e,#070312);}
+.bgo-nature{background:linear-gradient(to bottom,#2196f3 30%,#66bb6a 30%,#6d4c41 70%);}
+.bgo-office{background:linear-gradient(135deg,#eceff1,#b0bec5);}
+.api-note{background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:18px;}
+.api-note a{color:var(--accent);}
+
+/* Toast */
+.toast{position:fixed;top:22px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:10px 22px;font-size:14px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:4px;}
+
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .features{grid-template-columns:1fr 1fr;}
+  .pj-wrap{flex-direction:column;}
+  .pj-panel{width:100%;}
+  .c-left{min-width:auto;}
+  .side-panel.open{width:100%;position:fixed;right:0;top:0;bottom:0;z-index:200;}
+  .cb-label{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== LANDING ===== -->
+<div class="screen active" id="s-landing">
+  <div class="glow1"></div><div class="glow2"></div><div class="glow3"></div>
+<nav>
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        <span class="logo-text">KreyaConnect</span>
+    </div>
+    <div class="nav-r">
+        <button class="btn btn-ghost btn-sm" onclick="showApiKeyModal()">🔑 API Key</button>
+    </div>
+</nav>
+
+  <div class="hero">
+    <div class="badge"><span class="badge-dot"></span>AI-Powered Video Meetings</div>
+    <h1>Meet Smarter, Not Harder</h1>
+    <script>
+        // Typing animation for hero title
+        const heroH1 = document.querySelector('.hero h1');
+        const originalText = heroH1.innerHTML;
+        heroH1.innerHTML = '';
+        let index = 0;
+        
+        function typeText() {
+            if (index < originalText.length) {
+                heroH1.innerHTML += originalText[index];
+                index++;
+                setTimeout(typeText, 50);
+            }
+        }
+        
+        typeText();
+    </script>
+    <p>Crystal-clear video meetings with an AI co-pilot that transcribes, summarizes, and generates content — all in real time.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-lg" onclick="createMeeting()">✦ New Meeting</button>
+      <button class="btn btn-outline btn-lg" onclick="scrollToJoin()">Join a Meeting</button>
+    </div>
+
+    <div class="home-card">
+      <h3>Start or Join a Meeting</h3>
+      <p>No sign-up required. Just click and connect.</p>
+      <div class="row">
+        <input class="input" id="your-name" placeholder="Your name" value="You">
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="createMeeting()">+ New Meeting</button>
+      <div class="divider">or join existing</div>
+      <div class="join-row" id="join-section">
+        <input class="input" id="join-code" placeholder="Enter meeting code (e.g. kreya-abc-xyz)">
+        <button class="btn btn-ghost" onclick="joinMeeting()">Join</button>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feat"><div class="feat-ic">🎙️</div><h4>Live Transcription</h4><p>Real-time AI transcription of everything said in your meeting.</p></div>
+      <div class="feat"><div class="feat-ic">📋</div><h4>AI Summaries</h4><p>Auto-generated meeting summaries and action items the moment you end.</p></div>
+      <div class="feat"><div class="feat-ic">📊</div><h4>Instant Reports</h4><p>Turn your meeting into reports, blog posts, social content & more.</p></div>
+      <div class="feat"><div class="feat-ic">🎭</div><h4>Reactions & Emojis</h4><p>Express yourself with live emoji reactions and hand raise.</p></div>
+      <div class="feat"><div class="feat-ic">🖼️</div><h4>Virtual Backgrounds</h4><p>3 beautiful backgrounds — space, nature, and office.</p></div>
+      <div class="feat"><div class="feat-ic">🔒</div><h4>Private & Secure</h4><p>End-to-end encrypted. Your data stays yours.</p></div>
+    </div>
+  </div>
+  <footer>© 2025 KreyaConnect — AI-Powered Meetings for Everyone</footer>
+</div>
+
+<!-- ===== PRE-JOIN ===== -->
+<div class="screen" id="s-prejoin">
+  <nav style="border-bottom:1px solid var(--border);">
+    <div class="logo">
+      <div class="logo-icon">✦</div>
+      <span class="logo-text">KreyaConnect</span>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="goHome()">← Back</button>
+  </nav>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px;">
+    <div class="pj-wrap">
+      <div class="pj-video-box" id="pjbox">
+        <video id="pjv" autoplay muted playsinline></video>
+        <div class="pj-no-cam" id="pj-noav" style="display:none;">
+          <div class="big-av" id="pj-av-circle" style="background:#6366f1;">Y</div>
+          <span>Camera is off</span>
+        </div>
+        <div class="pj-ctrls">
+          <button class="ic-btn ic-btn-on" id="pj-mic-btn" onclick="togglePJMic()" title="Microphone">🎙️</button>
+          <button class="ic-btn ic-btn-on" id="pj-cam-btn" onclick="togglePJCam()" title="Camera">📷</button>
+        </div>
+      </div>
+      <div class="pj-panel">
+        <div>
+          <h2>Ready to join?</h2>
+          <p class="sub" style="color:var(--text2);font-size:14px;line-height:1.5;margin-top:8px;">Check your camera and mic before entering the meeting.</p>
+        </div>
+        <div class="pj-meeting-id" id="pj-meeting-id">kreya-abc-xyz</div>
+        <div>
+          <label>Your name</label>
+          <input class="input" id="meeting-name" placeholder="Enter your name" value="You">
+        </div>
+        <div>
+          <label>Audio / Video</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:13px;color:var(--text2);">🎙️ Microphone</div>
+            <div style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:13px;color:var(--text2);">📷 Camera</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%;" onclick="enterMeeting()">Join Meeting</button>
+        <button class="btn btn-ghost" style="width:100%;" onclick="enterMeeting()">Join without camera</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEETING ROOM ===== -->
+<div class="screen" id="s-meeting">
+  <div class="m-main">
+    <div class="m-header">
+      <div class="m-logo">✦ KreyaConnect</div>
+      <div class="m-center">
+        <div class="m-link" id="m-link-display" onclick="copyLink()" title="Click to copy">kreya-abc-xyz</div>
+        <div class="m-timer" id="m-timer">00:00</div>
+        <div class="m-rec"><span class="rec-dot"></span>Live</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="togglePanel('participants')">👥</button>
+        <button class="btn btn-ghost btn-sm" onclick="togglePanel('chat')">💬</button>
+        <button class="btn btn-ghost btn-sm" onclick="togglePanel('ai')">🤖 AI</button>
+      </div>
+    </div>
+
+    <div class="video-grid" id="video-grid">
+      <!-- Tiles injected by JS -->
+    </div>
+
+    <!-- Reactions popup -->
+    <div class="react-pop" id="react-pop">
+      <button class="rbtn" onclick="sendReaction('👍')">👍</button>
+      <button class="rbtn" onclick="sendReaction('❤️')">❤️</button>
+      <button class="rbtn" onclick="sendReaction('😂')">😂</button>
+      <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
+      <button class="rbtn" onclick="sendReaction('👏')">👏</button>
+      <button class="rbtn" onclick="sendReaction('🎉')">🎉</button>
+      <button class="rbtn" onclick="sendReaction('🚀')">🚀</button>
+      <button class="rbtn" onclick="sendReaction('💡')">💡</button>
+    </div>
+
+    <div class="controls">
+      <div class="c-left">
+        <span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;" id="c-name-display">You</span>
+      </div>
+      <div class="c-center">
+        <div style="position:relative;">
+          <button class="cb cb-n" id="btn-mic" onclick="toggleMic()" title="Mute/Unmute">🎙️<span class="cb-label">Mute</span></button>
+        </div>
+        <button class="cb cb-n" id="btn-cam" onclick="toggleCam()" title="Camera">📷<span class="cb-label">Camera</span></button>
+        <button class="cb cb-n" id="btn-share" onclick="toggleShare()" title="Share Screen">🖥️<span class="cb-label">Share</span></button>
+        <button class="cb cb-n" id="btn-react" onclick="toggleReactions()" title="Reactions">😀<span class="cb-label">React</span></button>
+        <button class="cb cb-n" id="btn-hand" onclick="toggleHand()" title="Raise Hand">✋<span class="cb-label">Hand</span></button>
+        <button class="cb cb-n" id="btn-bg" onclick="showBgModal()" title="Backgrounds">🖼️<span class="cb-label">BG</span></button>
+        <button class="cb cb-n" onclick="togglePanel('chat')" title="Chat">💬<span class="cb-label">Chat</span></button>
+        <button class="cb cb-a" onclick="togglePanel('ai')" title="AI Assistant">🤖<span class="cb-label">AI</span></button>
+        <button class="cb cb-end" onclick="showEndModal()">📞 End</button>
+      </div>
+      <div class="c-right">
+        <button class="btn btn-ghost btn-sm" onclick="togglePanel('participants')">👥 Participants</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE PANEL -->
+  <div class="side-panel" id="side-panel">
+    <div class="ptabs">
+      <div class="ptab on" id="tab-chat" onclick="switchTab('chat')">Chat</div>
+      <div class="ptab" id="tab-participants" onclick="switchTab('participants')">People</div>
+      <div class="ptab" id="tab-ai" onclick="switchTab('ai')">🤖 AI</div>
+      <div style="width:32px;height:32px;border-radius:50%;border:none;background:none;color:var(--text3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;margin:auto 8px;" onclick="closePanel()">×</div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="pcontent on" id="pc-chat">
+      <div class="msgs" id="chat-msgs"></div>
+      <div class="chat-in">
+        <input class="input" id="chat-inp" placeholder="Message everyone…" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="send-btn" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+
+    <!-- PARTICIPANTS -->
+    <div class="pcontent" id="pc-participants">
+      <div class="p-header">
+        <span style="font-size:15px;font-weight:600;">Participants</span>
+        <span class="p-count" id="p-count">4 people</span>
+      </div>
+      <div class="plist" id="plist"></div>
+    </div>
+
+    <!-- AI ASSISTANT -->
+    <div class="pcontent" id="pc-ai">
+      <div class="ai-inner">
+        <div>
+          <div class="ai-sec-title">Live Transcript</div>
+          <div class="transcript-box" id="transcript-box">
+            <span style="color:var(--text3);">Transcript will appear here as people speak…</span>
+          </div>
+        </div>
+        <div>
+          <div class="ai-sec-title" style="margin-bottom:10px;">Generate with AI</div>
+          <div class="ai-grid">
+            <button class="agen" onclick="generateAI('summary')"><span class="ai-icon">📋</span>Summary</button>
+            <button class="agen" onclick="generateAI('action_items')"><span class="ai-icon">✅</span>Action Items</button>
+            <button class="agen" onclick="generateAI('report')"><span class="ai-icon">📊</span>Report</button>
+            <button class="agen" onclick="generateAI('blog_post')"><span class="ai-icon">✍️</span>Blog Post</button>
+            <button class="agen" onclick="generateAI('social_post')"><span class="ai-icon">📱</span>Social Post</button>
+            <button class="agen" onclick="generateAI('newsletter')"><span class="ai-icon">📧</span>Newsletter</button>
+            <button class="agen" onclick="generateAI('presentation')"><span class="ai-icon">📊</span>Presentation</button>
+            <button class="agen" onclick="generateAI('podcast')"><span class="ai-icon">🎙️</span>Podcast Script</button>
+          </div>
+        </div>
+        <div class="ai-loading hidden" id="ai-loading">
+          <div class="spinner"></div> AI is generating…
+        </div>
+        <div class="ai-result" id="ai-result">
+          <div class="ai-result-hdr">
+            <span class="ai-result-title" id="ai-result-title">Summary</span>
+            <button class="copy-btn" onclick="copyAIResult()">Copy</button>
+          </div>
+          <div id="ai-result-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+<!-- End Meeting -->
+<div class="overlay" id="end-overlay">
+  <div class="modal">
+    <h3>End Meeting?</h3>
+    <p class="sub">Are you sure you want to leave? The meeting will continue for other participants.</p>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('end-overlay')">Stay</button>
+      <button class="btn btn-red" onclick="endMeeting()">Leave Meeting</button>
+    </div>
+  </div>
+</div>
+
+<!-- Background Selector -->
+<div class="overlay" id="bg-overlay">
+  <div class="modal">
+    <h3>Video Background</h3>
+    <p class="sub">Choose a virtual background for your video.</p>
+    <div class="bg-options">
+      <div class="bgo bgo-none sel" id="bgo-none" onclick="setBg('none')">No BG</div>
+      <div class="bgo bgo-space" id="bgo-space" onclick="setBg('space')" title="Space"></div>
+      <div class="bgo bgo-nature" id="bgo-nature" onclick="setBg('nature')" title="Nature"></div>
+      <div class="bgo bgo-office" id="bgo-office" onclick="setBg('office')" title="Office"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-primary" onclick="closeModal('bg-overlay')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- API Key -->
+<div class="overlay" id="apikey-overlay">
+  <div class="modal">
+    <h3>🔑kreya API Key</h3>
+    <p class="sub">Add your kreya API key to enable AI features like transcription summaries, action items, reports, and content generation.</p>
+    <div class="api-note">Get your free API key at <a href="https://console.kreya.ai" target="_blank">console.kreya.ai</a>. Your key is stored only in memory and never sent anywhere except directly to kreya.</div>
+    <label>API Key</label>
+    <input class="input" id="api-key-input" type="password" placeholder="sk-ant-api03-..." style="margin-bottom:8px;">
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('apikey-overlay')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveApiKey()">Save Key</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+const state = {
+  name: 'Enter name',
+  meetingId: '',
+  muted: false,
+  camOn: true,
+  sharing: false,
+  handRaised: false,
+  currentBg: 'none',
+  panelOpen: false,
+  activeTab: 'chat',
+  stream: null,
+  pjStream: null,
+  pjMuted: false,
+  pjCamOn: true,
+  timerSec: 0,
+  timerInterval: null,
+  transcript: [],
+  transcriptInterval: null,
+  apiKey: '',
+  reactions: {},
+  chatMessages: [],
+  peers: {},
+  signalingServer: 'wss://signal.example.com',
+  isHost: false,
+};
+
+const COLORS = ['#6366f1','#ec4899','#22c55e','#f59e0b','#06b6d4','#f97316'];
+const PARTICIPANTS = [
+  {id:1, name:'AMEYA', color:'#6366f1', muted:false, camOn:true, handRaised:false},
+  {id:2, name:'amul', color:'#ec4899', muted:true, camOn:true, handRaised:false},
+  {id:3, name:'garima', color:'#22c55e', muted:false, camOn:false, handRaised:false},
+];
+
+const TRANSCRIPT_LINES = [
+  "ameya: Good morning everyone, let's get started with today's meeting.",
+  "amul: Thanks for joining. I have a few updates from the product team.",
+  "Garima: Before we begin, can everyone confirm they can hear me clearly?",
+  "ameya: Yes, audio is clear on my end. Let's dive into the agenda.",
+  "amul : So the main topics today are Q2 roadmap, user feedback, and the upcoming launch.",
+  "garima: I want to highlight that our user retention went up by 23% last month.",
+  "ameya: That's great news! What drove that improvement?",
+  "amul : We shipped the new onboarding flow and it made a significant difference.",
+"Garima: The data shows users who complete onboarding are 4x more likely to stay.",
+  "ameya: We should prioritize documentation and tutorials based on this insight.",
+  "amul : Agreed. I'll put together a proposal for the tutorial content by Friday.",
+  "Garima: Should we consider a video walkthrough series as well?",
+  "ameya: Absolutely. Let's assign that to the content team.",
+  "amul : Moving on to the Q2 roadmap — we have 12 features planned.",
+  "garima: Given our capacity, I'd suggest we focus on the top 5 high-impact ones.",
+  "ameya: Makes sense. Let's prioritize by user impact and development effort.",
+];
+
+let transcriptIndex = 0;
+
+// ===== NAVIGATION =====
+function goHome() {
+  stopStreams();
+  setScreen('s-landing');
+}
+
+function setScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.style.display = ''; });
+  const el = document.getElementById(id);
+  if (id === 's-meeting') { el.style.display = 'flex'; el.classList.add('active'); }
+  else { el.classList.add('active'); }
+}
+
+function scrollToJoin() {
+  document.getElementById('join-section').scrollIntoView({behavior:'smooth'});
+  document.getElementById('join-code').focus();
+}
+
+function generateMeetingId() {
+  const w = () => Math.random().toString(36).substr(2, 3);
+  return `kreya-${w()}-${w()}`;
+}
+
+function createMeeting() {
+  state.name = document.getElementById('your-name').value || 'You';
+  state.meetingId = generateMeetingId();
+  goToPrejoin();
+}
+
+function joinMeeting() {
+  const code = document.getElementById('join-code').value.trim();
+  if (!code) { toast('Please enter a meeting code'); return; }
+  state.name = document.getElementById('your-name').value || 'You';
+  state.meetingId = code;
+  goToPrejoin();
+}
+
+async function goToPrejoin() {
+  setScreen('s-prejoin');
+  document.getElementById('pj-meeting-id').textContent = state.meetingId;
+  document.getElementById('meeting-name').value = state.name;
+  document.getElementById('pj-av-circle').textContent = state.name[0].toUpperCase();
+  try {
+    const s = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+    state.pjStream = s;
+    const v = document.getElementById('pjv');
+    v.srcObject = s; v.play();
+    document.getElementById('pj-noav').style.display = 'none';
+  } catch(e) {
+    document.getElementById('pjv').style.display = 'none';
+    document.getElementById('pj-noav').style.display = 'flex';
+    state.pjCamOn = false;
+    updatePJButtons();
+  }
+}
+
+function togglePJMic() {
+  state.pjMuted = !state.pjMuted;
+  if (state.pjStream) state.pjStream.getAudioTracks().forEach(t => t.enabled = !state.pjMuted);
+  updatePJButtons();
+}
+
+function togglePJCam() {
+  state.pjCamOn = !state.pjCamOn;
+  if (state.pjStream) state.pjStream.getVideoTracks().forEach(t => t.enabled = state.pjCamOn);
+  const v = document.getElementById('pjv');
+  const noav = document.getElementById('pj-noav');
+  v.style.display = state.pjCamOn ? 'block' : 'none';
+  noav.style.display = state.pjCamOn ? 'none' : 'flex';
+  updatePJButtons();
+}
+
+function updatePJButtons() {
+  const mb = document.getElementById('pj-mic-btn');
+  const cb = document.getElementById('pj-cam-btn');
+  mb.className = `ic-btn ${state.pjMuted ? 'ic-btn-off' : 'ic-btn-on'}`;
+  mb.textContent = state.pjMuted ? '🔇' : '🎙️';
+  cb.className = `ic-btn ${state.pjCamOn ? 'ic-btn-on' : 'ic-btn-off'}`;
+  cb.textContent = state.pjCamOn ? '📷' : '🚫';
+}
+
+async function enterMeeting() {
+  state.name = document.getElementById('meeting-name').value || 'You';
+  state.muted = state.pjMuted;
+  state.camOn = state.pjCamOn;
+  state.stream = state.pjStream;
+  setScreen('s-meeting');
+  initMeeting();
+  broadcastJoin(); // Notify others that you joined
+}
+
+function broadcastJoin() {
+  // Send join notification to other participants in the same meeting
+  const joinMsg = {
+    type: 'user-joined',
+    meetingId: state.meetingId,
+    userId: generateUserId(),
+    name: state.name,
+    timestamp: new Date().toISOString()
+  };
+  localStorage.setItem(`meeting-${state.meetingId}`, JSON.stringify(joinMsg));
+  // Check for other participants in the same meeting
+  checkForOtherParticipants();
+}
+
+function generateUserId() {
+  return 'user-' + Math.random().toString(36).substr(2, 9);
+}
+
+function checkForOtherParticipants() {
+  // Simulate checking for other participants joining the same meeting
+  for (let key in localStorage) {
+    if (key.startsWith('meeting-')) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (data.meetingId === state.meetingId && data.userId !== generateUserId()) {
+          addSystemChat(`${data.name} has joined the meeting`);
+          renderParticipants();
+        }
+      } catch(e) {}
+    }
+  }
+}
+
+// ===== MEETING =====
+function initMeeting() {
+  document.getElementById('m-link-display').textContent = state.meetingId;
+  document.getElementById('c-name-display').textContent = state.name;
+  renderVideoGrid();
+  renderParticipants();
+  addSystemChat(`Meeting started. ID: ${state.meetingId}`);
+  addSystemChat('ameya, amul, and garima  have joined.');
+  startTimer();
+  startTranscript();
+  // Simulate occasional speaking/reactions
+  setTimeout(() => { simulateSpeaking(); }, 3000);
+}
+
+function renderVideoGrid() {
+  const grid = document.getElementById('video-grid');
+  grid.innerHTML = '';
+  
+  // Calculate grid layout based on number of participants
+  const totalParticipants = 1 + PARTICIPANTS.length; // self + others
+  let cols = Math.ceil(Math.sqrt(totalParticipants));
+  let rows = Math.ceil(totalParticipants / cols);
+  grid.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows},1fr)`;
+
+  // Self tile
+  const selfTile = makeTile('self', state.name, null, true);
+  grid.appendChild(selfTile);
+  if (state.stream) {
+    const v = selfTile.querySelector('video');
+    if (v) { 
+      v.srcObject = state.stream; 
+      v.play().catch(()=>{});
+    }
+  } else {
+    selfTile.querySelector('.av').style.display = 'flex';
+  }
+
+  // Participant tiles - now will display actual peer streams when available
+  PARTICIPANTS.forEach(p => {
+    const tile = makeTile(p.id, p.name, p.color, false, p);
+    grid.appendChild(tile);
+    // If peer video stream exists, attach it
+    if (state.peers[p.id] && state.peers[p.id].stream) {
+      const v = tile.querySelector('video');
+      if (v) {
+        v.srcObject = state.peers[p.id].stream;
+        v.play().catch(()=>{});
+      }
+    }
+  });
+  updateSelfTileUI();
+}
+
+function makeTile(id, name, color, isSelf, p) {
+  const div = document.createElement('div');
+  div.className = `vt${isSelf ? ' you' : ''}`;
+  div.id = `tile-${id}`;
+  const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,2);
+  const col = color || COLORS[0];
+  const hasCam = isSelf ? state.camOn : (p && p.camOn);
+  div.innerHTML = `
+    ${!isSelf ? `<div class="av" style="display:${hasCam?'none':'flex'}"><div class="av-circle" style="background:${col}">${initials}</div><span class="av-name">${name}</span></div>` : `<div class="av" style="display:${hasCam?'none':'flex'}"><div class="av-circle" style="background:#6366f1">${name[0].toUpperCase()}</div><span class="av-name">${name}</span></div>`}
+    ${isSelf ? `<video autoplay muted playsinline style="display:${hasCam?'block':'none'};"></video>` : `<video autoplay playsinline style="display:${hasCam?'block':'none'};"></video>`}
+    <div class="vbg" id="vbg-${id}" style="display:none;"></div>
+    <div class="vt-overlay">
+      <span class="vt-name">
+        ${p && p.handRaised ? '✋ ' : ''}
+        ${isSelf ? `${name} (You)` : name}
+        ${p && p.muted ? ' 🔇' : ''}
+      </span>
+      <span class="vt-icons">${isSelf && state.muted ? '🔇' : ''}</span>
+    </div>`;
+  return div;
+}
+
+function updateSelfTileUI() {
+  const tile = document.getElementById('tile-self');
+  if (!tile) return;
+  const av = tile.querySelector('.av');
+  const v = tile.querySelector('video');
+  if (av) av.style.display = state.camOn ? 'none' : 'flex';
+  if (v) v.style.display = state.camOn ? 'block' : 'none';
+  const overlay = tile.querySelector('.vt-overlay .vt-icons');
+  if (overlay) overlay.textContent = state.muted ? '🔇' : '';
+  applyBgToTile('self');
+}
+
+function applyBgToTile(id) {
+  const vbg = document.getElementById(`vbg-${id}`);
+  if (!vbg) return;
+  if (id !== 'self') { vbg.style.display = 'none'; return; }
+  if (state.currentBg === 'none') { vbg.style.display = 'none'; return; }
+  vbg.style.display = 'block';
+  vbg.className = `vbg ${state.currentBg}`;
+}
+
+// ===== CONTROLS =====
+function toggleMic() {
+  state.muted = !state.muted;
+  if (state.stream) state.stream.getAudioTracks().forEach(t => t.enabled = !state.muted);
+  const btn = document.getElementById('btn-mic');
+  btn.textContent = state.muted ? '🔇' : '🎙️';
+  btn.querySelector('.cb-label').textContent = state.muted ? 'Unmute' : 'Mute';
+  btn.className = `cb ${state.muted ? 'cb-off' : 'cb-n'}`;
+  updateSelfTileUI();
+  toast(state.muted ? 'Microphone muted' : 'Microphone on');
+}
+
+function toggleCam() {
+  state.camOn = !state.camOn;
+  if (state.stream) state.stream.getVideoTracks().forEach(t => t.enabled = state.camOn);
+  const btn = document.getElementById('btn-cam');
+  btn.textContent = state.camOn ? '📷' : '🚫';
+  btn.querySelector('.cb-label').textContent = state.camOn ? 'Camera' : 'Camera Off';
+  btn.className = `cb ${state.camOn ? 'cb-n' : 'cb-off'}`;
+  updateSelfTileUI();
+  toast(state.camOn ? 'Camera on' : 'Camera off');
+}
+
+async function toggleShare() {
+  if (!state.sharing) {
+    try {
+      const s = await navigator.mediaDevices.getDisplayMedia({video:true});
+      state.sharing = true;
+      const btn = document.getElementById('btn-share');
+      btn.className = 'cb cb-a';
+      btn.querySelector('.cb-label').textContent = 'Stop Share';
+      toast('Screen sharing started');
+      s.getVideoTracks()[0].onended = () => { state.sharing = false; btn.className = 'cb cb-n'; btn.querySelector('.cb-label').textContent = 'Share'; };
+    } catch(e) { toast('Screen share cancelled'); }
+  } else {
+    state.sharing = false;
+    document.getElementById('btn-share').className = 'cb cb-n';
+    document.getElementById('btn-share').querySelector('.cb-label').textContent = 'Share';
+    toast('Screen sharing stopped');
+  }
+}
+
+function toggleHand() {
+  state.handRaised = !state.handRaised;
+  const btn = document.getElementById('btn-hand');
+  btn.className = `cb ${state.handRaised ? 'cb-a' : 'cb-n'}`;
+  const tile = document.getElementById('tile-self');
+  if (tile) {
+    const existing = tile.querySelector('.hand-ind');
+    if (existing) existing.remove();
+    if (state.handRaised) {
+      const h = document.createElement('div');
+      h.className = 'hand-ind'; h.textContent = '✋';
+      tile.appendChild(h);
+    }
+  }
+  toast(state.handRaised ? '✋ Hand raised' : 'Hand lowered');
+  addSystemChat(state.handRaised ? `${state.name} raised their hand` : `${state.name} lowered their hand`);
+}
+
+function toggleReactions() {
+  const pop = document.getElementById('react-pop');
+  pop.classList.toggle('show');
+}
+
+function sendReaction(emoji) {
+  document.getElementById('react-pop').classList.remove('show');
+  showReactionOnTile('self', emoji);
+  // Random participant also reacts sometimes
+  if (Math.random() > 0.5) {
+    const p = PARTICIPANTS[Math.floor(Math.random() * PARTICIPANTS.length)];
+    setTimeout(() => showReactionOnTile(p.id, ['👍','❤️','👏','🔥'][Math.floor(Math.random()*4)]), 600);
+  }
+}
+
+function showReactionOnTile(id, emoji) {
+  const tile = document.getElementById(`tile-${id}`);
+  if (!tile) return;
+  const el = document.createElement('div');
+  el.className = 'vt-reaction'; el.textContent = emoji;
+  tile.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+// ===== PANEL =====
+function togglePanel(tab) {
+  const panel = document.getElementById('side-panel');
+  if (state.panelOpen && state.activeTab === tab) {
+    closePanel();
+  } else {
+    state.panelOpen = true;
+    panel.classList.add('open');
+    switchTab(tab);
+  }
+}
+
+function closePanel() {
+  state.panelOpen = false;
+  document.getElementById('side-panel').classList.remove('open');
+}
+
+function switchTab(tab) {
+  state.activeTab = tab;
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.pcontent').forEach(c => c.classList.remove('on'));
+  document.getElementById(`tab-${tab}`).classList.add('on');
+  document.getElementById(`pc-${tab}`).classList.add('on');
+  if (!state.panelOpen) { state.panelOpen = true; document.getElementById('side-panel').classList.add('open'); }
+}
+
+// ===== CHAT =====
+function addSystemChat(msg) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.style.cssText = 'text-align:center;font-size:12px;color:var(--text3);padding:4px 0;';
+  div.textContent = msg;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addChatMessage(author, text, isYou) {
+  const msgs = document.getElementById('chat-msgs');
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const div = document.createElement('div');
+  div.className = `msg${isYou?' msg-you':''}`;
+  div.innerHTML = `<div class="msg-author">${author}</div><div class="msg-bubble">${text}</div><div class="msg-time">${time}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendChat() {
+  const inp = document.getElementById('chat-inp');
+  const text = inp.value.trim();
+  if (!text) return;
+  addChatMessage(state.name, text, true);
+  inp.value = '';
+  // Simulate reply
+  setTimeout(() => {
+    const replies = ['Got it!','Thanks for sharing that.','Makes sense.','Absolutely, agree!','Let me check on that.','Good point!'];
+    const p = PARTICIPANTS[Math.floor(Math.random() * PARTICIPANTS.length)];
+    addChatMessage(p.name, replies[Math.floor(Math.random()*replies.length)], false);
+  }, 1500 + Math.random()*2000);
+}
+
+// ===== PARTICIPANTS =====
+function renderParticipants() {
+  const list = document.getElementById('plist');
+  const all = [{name:state.name, color:'#6366f1', muted:state.muted, camOn:state.camOn, isYou:true}, ...PARTICIPANTS];
+  list.innerHTML = '';
+  all.forEach(p => {
+    const initials = p.name.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,2);
+    const div = document.createElement('div');
+    div.className = 'pitem';
+    div.innerHTML = `
+      <div class="pav" style="background:${p.color}">${initials}</div>
+      <div class="p-info">
+        <div class="p-name">${p.name}${p.isYou?' (You)':''}</div>
+        <div class="p-role">${p.isYou?'Host':'Participant'}</div>
+      </div>
+      <div class="p-icons">
+        <span title="Mic">${p.muted?'🔇':'🎙️'}</span>
+        <span title="Camera">${p.camOn?'📷':'🚫'}</span>
+      </div>`;
+    list.appendChild(div);
+  });
+  document.getElementById('p-count').textContent = `${all.length} people`;
+}
+
+// ===== TIMER =====
+function startTimer() {
+  state.timerSec = 0;
+  state.timerInterval = setInterval(() => {
+    state.timerSec++;
+    const m = String(Math.floor(state.timerSec/60)).padStart(2,'0');
+    const s = String(state.timerSec%60).padStart(2,'0');
+    document.getElementById('m-timer').textContent = `${m}:${s}`;
+  }, 1000);
+}
+
+// ===== TRANSCRIPT =====
+function startTranscript() {
+  transcriptIndex = 0;
+  const box = document.getElementById('transcript-box');
+  box.innerHTML = '';
+  state.transcriptInterval = setInterval(() => {
+    if (transcriptIndex >= TRANSCRIPT_LINES.length) {
+      transcriptIndex = 0;
+      const sep = document.createElement('div');
+      sep.style.cssText = 'border-top:1px solid var(--border);margin:8px 0;';
+      box.appendChild(sep);
+    }
+    const line = TRANSCRIPT_LINES[transcriptIndex++];
+    const p = document.createElement('p');
+    const [speaker, ...rest] = line.split(': ');
+    p.innerHTML = `<strong style="color:var(--text)">${speaker}:</strong> ${rest.join(': ')}`;
+    p.style.marginBottom = '6px';
+    box.appendChild(p);
+    box.scrollTop = box.scrollHeight;
+    state.transcript.push(line);
+  }, 4500);
+}
+
+// ===== SPEAKING SIMULATION =====
+function simulateSpeaking() {
+  const ids = ['self', ...PARTICIPANTS.map(p=>p.id)];
+  let i = 0;
+  setInterval(() => {
+    ids.forEach(id => document.getElementById(`tile-${id}`)?.classList.remove('speaking'));
+    if (Math.random() > 0.3) {
+      const id = ids[Math.floor(Math.random()*ids.length)];
+      document.getElementById(`tile-${id}`)?.classList.add('speaking');
+    }
+  }, 3000);
+}
+
+// ===== BACKGROUNDS =====
+function showBgModal() { showModal('bg-overlay'); }
+function setBg(bg) {
+  state.currentBg = bg;
+  document.querySelectorAll('.bgo').forEach(el => el.classList.remove('sel'));
+  document.getElementById(`bgo-${bg}`).classList.add('sel');
+  updateSelfTileUI();
+}
+
+// ===== AI GENERATION =====
+const AI_PROMPTS = {
+  summary: "Write a clear, professional meeting summary (3-5 paragraphs) based on this transcript:",
+  action_items: "Extract all action items from this meeting transcript. Format as a numbered list with: action, owner, and deadline (suggest reasonable deadlines). Transcript:",
+  report: "Write a professional business report based on this meeting transcript. Include: Executive Summary, Key Discussions, Decisions Made, Next Steps. Transcript:",
+  blog_post: "Write an engaging blog post (400-500 words) based on the insights from this meeting transcript. Make it informative and readable. Transcript:",
+  social_post: "Write 3 social media posts (LinkedIn, Twitter/X, Instagram) based on the key insights from this meeting. Keep them engaging and professional. Transcript:",
+  newsletter: "Write a professional newsletter section (300-400 words) summarizing the key updates from this meeting. Suitable for internal company newsletter. Transcript:",
+  presentation: "Create a presentation outline with 6-8 slides based on this meeting. For each slide: title, 3-4 bullet points. Transcript:",
+  podcast: "Write a podcast episode script (intro, discussion points, outro) based on the themes from this meeting. Make it conversational and engaging. Transcript:",
+};
+
+const AI_LABELS = {
+  summary:'📋 Meeting Summary', action_items:'✅ Action Items', report:'📊 Meeting Report',
+  blog_post:'✍️ Blog Post', social_post:'📱 Social Media Posts', newsletter:'📧 Newsletter',
+  presentation:'📊 Presentation Outline', podcast:'🎙️ Podcast Script',
+};
+
+async function generateAI(type) {
+  if (!state.apiKey) {
+    showApiKeyModal();
+    toast('Please add your kreya API key first');
+    return;
+  }
+  const transcript = state.transcript.length > 0 ? state.transcript.join('\n') : TRANSCRIPT_LINES.slice(0,8).join('\n');
+  const prompt = AI_PROMPTS[type] + '\n\n' + transcript;
+
+  document.getElementById('ai-loading').classList.remove('hidden');
+  document.getElementById('ai-result').classList.remove('show');
+  switchTab('ai');
+
+  try {
+    const res = await fetch('https://api.kreya.ai/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':state.apiKey,'anthropic-version':'2023-06-01'},
+      body: JSON.stringify({
+        model:'kreya-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const text = data.content?.map(c=>c.text||'').join('') || 'No response received.';
+    document.getElementById('ai-loading').classList.add('hidden');
+    document.getElementById('ai-result-title').textContent = AI_LABELS[type] || type;
+    document.getElementById('ai-result-text').innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    document.getElementById('ai-result').classList.add('show');
+  } catch(e) {
+    document.getElementById('ai-loading').classList.add('hidden');
+    document.getElementById('ai-result-title').textContent = 'Error';
+    document.getElementById('ai-result-text').textContent = 'Error: ' + e.message + '\n\nCheck your API key and try again.';
+    document.getElementById('ai-result').classList.add('show');
+  }
+}
+
+function copyAIResult() {
+  const text = document.getElementById('ai-result-text').innerText;
+  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!'));
+}
+
+// ===== MODALS =====
+function showModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function showEndModal() { showModal('end-overlay'); }
+function showBgModal() { showModal('bg-overlay'); }
+function showApiKeyModal() {
+  showModal('apikey-overlay');
+  if (state.apiKey) document.getElementById('api-key-input').value = state.apiKey;
+}
+function saveApiKey() {
+  state.apiKey = document.getElementById('api-key-input').value.trim();
+  closeModal('apikey-overlay');
+  toast(state.apiKey ? '🔑 API key saved!' : 'API key cleared');
+}
+
+function endMeeting() {
+  stopStreams();
+  clearInterval(state.timerInterval);
+  clearInterval(state.transcriptInterval);
+  closeModal('end-overlay');
+  goHome();
+  toast('Meeting ended. Thanks for using KreyaConnect!');
+}
+
+function stopStreams() {
+  if (state.stream) { state.stream.getTracks().forEach(t=>t.stop()); state.stream = null; }
+  if (state.pjStream) { state.pjStream.getTracks().forEach(t=>t.stop()); state.pjStream = null; }
+}
+
+// ===== UTILS =====
+function copyLink() {
+  const link = `https://kreyaconnect.app/m/${state.meetingId}`;
+  navigator.clipboard.writeText(link).then(() => toast('Meeting link copied!')).catch(() => toast(link));
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// Close overlays on bg click
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+});
+
+// Close reactions on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('#react-pop') && !e.target.closest('#btn-react')) {
+    document.getElementById('react-pop').classList.remove('show');
+  }
+});
+
+// Initial fake chat messages for demo
+setTimeout(() => {
+  if (document.getElementById('chat-msgs')) {
+    addChatMessage('ameya', 'Hey everyone! Ready for the meeting?', false);
+    setTimeout(() => addChatMessage('amul', 'Yes, all set here! 🙌', false), 3000);
+    setTimeout(() => addChatMessage('garima', 'Present and accounted for.', false), 6000);
+  }
+}, 2000);
+</script>
+</body>
+</html>

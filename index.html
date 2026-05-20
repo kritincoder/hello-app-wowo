@@ -700,81 +700,10 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
-/* === YOUR ORIGINAL CSS (UNCHANGED) === */
-/* NOTE: trimmed here for brevity in explanation, but in real response I should include full? However tool requires full content. Need include but due to length maybe okay. */
 
-/* PASTE YOUR ORIGINAL CSS HERE (ALL PARTS COMBINED) */
 
-/* ================= MOBILE FINAL FIX ================= */
-@media (max-width: 768px){
-  section{padding:60px 16px !important;}
-  nav{padding:10px 16px;}
-  #hero{padding:100px 16px 60px;}
-  .hero-welcome{font-size:clamp(3rem,12vw,6rem);}
-  .hero-sub{font-size:0.85rem;}
-  #about-artist{grid-template-columns:1fr !important;padding:60px 16px !important;gap:30px;}
-  .stat-row{grid-template-columns:1fr;}
-  #services{padding:60px 16px !important;}
-  .svc-card{padding:30px 20px;}
-  .team-card-full{grid-template-columns:1fr !important;}
-  .team-card{min-height:auto !important;}
-  .team-photo{min-height:300px;}
-  .team-info{padding:24px 20px;}
-  .music-row{grid-template-columns:1fr !important;}
-  .works-grid{grid-template-columns:1fr !important;}
-  .sp-card{flex-direction:column;}
-  .sp-art{width:100%;height:200px;}
-  .sp-play-col{flex-direction:row;justify-content:space-between;width:100%;padding:10px 16px;}
-  .yt-title{font-size:1.2rem;}
-  .reels-row{grid-template-columns:1fr !important;}
-  #contact{grid-template-columns:1fr !important;padding:60px 16px !important;gap:30px;}
-  .contact-title{font-size:2.2rem;}
-  .f-input,.f-textarea{width:100%;}
-  .f-submit{width:100%;text-align:center;}
-  .rv-card{width:260px;padding:24px 20px;}
-  footer{padding:30px 16px !important;}
-  .footer-top{flex-direction:column;gap:20px;}
-  .footer-bottom{flex-direction:column;gap:10px;text-align:center;}
-  #mascot{width:90px;height:90px;}
-}
-</style>
-</head>
 
-<body>
 
-<!-- KEEP YOUR ORIGINAL HTML HERE (ALL PARTS COMBINED) -->
 
-<script>
-// Detect mobile
-const isMobile = window.innerWidth <= 768;
 
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('nav-logo').src = 'data:image/png;base64,' + LOGO_B64;
-  document.getElementById('foot-logo').src = 'data:image/png;base64,' + LOGO_B64;
-  document.getElementById('mascot-img').src = 'data:image/png;base64,' + MASCOT_B64;
-  document.getElementById('sahil-img').src = 'data:image/jpeg;base64,' + SAHIL_B64;
-  document.getElementById('vinayak-img').src = 'data:image/jpeg;base64,' + VIN_B64;
-  document.getElementById('spotify-img').src = 'data:image/jpeg;base64,' + SPOT_B64;
-});
 
-// Cursor glow fix
-const glow = document.getElementById('cursor-glow');
-if (!isMobile) {
-  document.addEventListener('mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-  });
-} else {
-  if(glow) glow.style.display = "none";
-}
-
-// Mascot fix
-const mascot = document.getElementById('mascot');
-if (isMobile && mascot) {
-  mascot.style.display = "none";
-}
-
-</script>
-
-</body>
-</html>

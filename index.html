@@ -700,10 +700,70 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 1. ESSENTIAL: The Viewport Meta Tag -->
+    <!-- This tells the phone to match the website width to the device screen -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Friendly Website</title>
+
+    <!-- 2. CSS: Responsive Styles -->
+    <style>
+        /* Base settings to keep code stable */
+        * { box-sizing: border-box; } 
+        body { margin: 0; font-family: sans-serif; line-height: 1.6; }
+
+        /* Fluid Layout: Use percentages so items shrink to fit */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Prevent images from "overflowing" off the screen */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* MEDIA QUERY: Changes the layout only for mobile (screens < 768px) */
+        @media screen and (max-width: 768px) {
+            .column {
+                width: 100%; /* Stack elements vertically on small screens */
+                display: block;
+            }
+            .nav-menu {
+                display: none; /* Hide complex menus on mobile by default */
+            }
+        }
+    </style>
+</head>
+<body>
 
 
+    <!-- 3. JAVASCRIPT: Dynamic Mobile Detection -->
+    <script>
+        // This script runs without interfering with your main logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const status = document.getElementById('mobile-status');
+            
+            // Function to check if user is on a mobile-sized screen
+            function checkWidth() {
+                if (window.innerWidth <= 768) {
+                    status.innerHTML = "<strong>Status:</strong> Optimized for Mobile View";
+                    status.style.color = "green";
+                } else {
+                    status.innerHTML = "<strong>Status:</strong> Desktop View";
+                    status.style.color = "blue";
+                }
+            }
 
-
-
-
-
+            // Listen for window resize to adjust on the fly
+            window.addEventListener('resize', checkWidth);
+            checkWidth(); // Initial check
+        });
+    </script>
+</body>
+</html>

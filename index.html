@@ -157,6 +157,8 @@ nav{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;justify-con
 .yt-play-icon{width:68px;height:68px;background:rgba(251,201,3,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:transform 0.22s;}
 .yt-card:hover .yt-play-icon{transform:scale(1.12);}
 .yt-play-icon svg{width:26px;height:26px;fill:var(--blk);margin-left:4px;}
+.works-grid .yt-card{display:flex;flex-direction:column;min-height:100%;}
+.works-grid .yt-meta{padding:22px 24px 26px;margin-top:auto;display:flex;flex-direction:column;justify-content:space-between;}
 .yt-meta{padding:22px 24px 26px;}
 .yt-plat{font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:#ff4444;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
 .yt-plat::before{content:'▶';font-size:0.48rem;}
@@ -170,11 +172,9 @@ nav{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;justify-con
 .yt-card.light .yt-desc{color:rgba(0,0,0,0.38);}
 .yt-card.light:hover{border-color:var(--yd);}
 
-.works-grid{display:flex;gap:20px;overflow-x:auto;padding-bottom:16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
-.works-grid > a{flex:0 0 min(320px,100%);scroll-snap-align:start;}
-.works-grid::-webkit-scrollbar{height:10px;}
-.works-grid::-webkit-scrollbar-track{background:transparent;}
-.works-grid::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.1);border-radius:999px;}
+.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:stretch;padding-bottom:0;}
+.works-grid > a{min-height:380px;display:flex;flex-direction:column;}
+.works-grid::-webkit-scrollbar{display:none;}
 
 /* REELS */
 .reels-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
@@ -368,12 +368,6 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
   <div class="fade-in">
     <h2 class="about-title">About Us</h2>
     <p class="about-body">POPCORN Inc. is a forward-thinking music collective known for blending genres and pushing boundaries. With a passion for innovation, collaboration, and teamwork, we redefine what it means to make music in the modern age. Expect bold melodies, experimental beats, and a unique soundscape that keeps listeners coming back for more.</p>
-    <div class="about-body" style="margin-top:20px;">
-      <strong>Sahil Mishra</strong> — a visionary who turns stories into sonic experiences. Sahil's work spans film scores, TV compositions, and original music production. His ability to blend classical sensibilities with contemporary production pushes every project toward artistic excellence.
-    </div>
-    <div class="about-body" style="margin-top:16px;">
-      <strong>Vinayak Chopra</strong> — the sonic architect behind every track. Vinayak builds immersive soundscapes and handles the technical brilliance of production, mixing, and mastering. His sound design transforms compositions into studio-quality finished records.
-    </div>
   </div>
   <div class="about-vis fade-in fd2">
     <div class="record-wrap"><div class="record"></div></div>
@@ -453,7 +447,7 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
     </a>
 
   </div>
-  <h3 style="margin-top:36px;margin-bottom:18px;font-size:1.2rem;font-weight:700;">Other Work</h3>
+  <h3 style="margin-top:36px;margin-bottom:18px;font-size:1.2rem;font-weight:700;">Other Works</h3>
   <div class="works-grid fade-in">
 
     <a class="yt-card light" href="https://www.youtube.com/watch?v=Y2K_IBLI5XM" target="_blank">
@@ -521,7 +515,7 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
     <h2 class="contact-title">Lets connect</h2>
     <div class="contact-details">
       <div class="cd-item"><span class="cd-icon">✉️</span><div class="cd-text"><strong>Email</strong>popcorninc.music@gmail.com</div></div>
-      <div class="cd-item"><span class="cd-icon">🔗</span><div class="cd-text"><strong>Links</strong><a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color:inherit;text-decoration:none;">Spotify</a> · <a href="https://music.apple.com/in/artist/popcorn-inc/1837823770" target="_blank" style="color:inherit;text-decoration:none;">Apple Music</a> · <a href="https://www.jiosaavn.com/artist/popcorn-inc.-songs/OXJ7IhWCB8g_" target="_blank" style="color:inherit;text-decoration:none;">JioSaavn</a> · <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color:inherit;text-decoration:none;">YouTube</a></div></div>
+      <div class="cd-item"><span class="cd-icon">🔗</span><div class="cd-text"><strong>Links</strong><a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color:inherit;text-decoration:none;">YouTube</a> · <a href="https://x.com/PopcornI81495" target="_blank" style="color:inherit;text-decoration:none;">X</a> · <a href="https://www.threads.com/@popcorninc.music" target="_blank" style="color:inherit;text-decoration:none;">Threads</a> · <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank" style="color:inherit;text-decoration:none;">FB Page</a> · <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color:inherit;text-decoration:none;">Spotify</a> · <a href="https://www.jiosaavn.com/artist/popcorn-inc.-songs/OXJ7IhWCB8g_" target="_blank" style="color:inherit;text-decoration:none;">JioSaavn</a> · <a href="https://music.apple.com/in/artist/popcorn-inc/1837823770" target="_blank" style="color:inherit;text-decoration:none;">Apple Music</a> · <a href="https://www.instagram.com/popcorninc.music/" target="_blank" style="color:inherit;text-decoration:none;">Instagram</a></div></div>
     </div>
   </div>
 </section>
@@ -536,19 +530,18 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
       <div class="foot-tag" style="color: black; font-weight: bold;">
         Tasty Tunes, Hot n Fresh!
       </div>
-      <div class="foot-address" style="color: black; font-weight: bold;">
-        Bandra West, Mumbai, Maharashtra<br>
-        popcorninc.music@gmail.com<br>
-        +91 94501 21705
-      </div>
     </div>
 
     <div class="foot-socials">
-      <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">spotify</a>
-      <a href="https://music.apple.com/in/artist/popcorn-inc/1837823770" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">apple</a>
-      <a href="https://www.jiosaavn.com/artist/popcorn-inc.-songs/OXJ7IhWCB8g_" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">jiosaavn</a>
-      <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">youtube</a>
-       </div>
+      <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">YouTube</a>
+      <a href="https://x.com/PopcornI81495" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">X</a>
+      <a href="https://www.threads.com/@popcorninc.music" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">Threads</a>
+      <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">FB Page</a>
+      <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">Spotify</a>
+      <a href="https://www.jiosaavn.com/artist/popcorn-inc.-songs/OXJ7IhWCB8g_" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">JioSaavn</a>
+      <a href="https://music.apple.com/in/artist/popcorn-inc/1837823770" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">Apple Music</a>
+      <a href="https://www.instagram.com/popcorninc.music/" target="_blank" style="color: black; font-weight: bold; text-decoration: none;">Instagram</a>
+    </div>
   </div>
 
   <div class="footer-bottom">

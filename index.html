@@ -590,11 +590,63 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
   <div class="fade-in">
     <h2 class="contact-title">Lets connect</h2>
     <div class="contact-details">
-      <div class="cd-item"><span class="cd-icon">✉️</span><div class="cd-text"><strong>Email</strong>popcorninc.music@gmail.com</div></div>
-      <div class="cd-item"><span class="cd-icon">🔗</span><div class="cd-text"><strong>Links</strong><a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color:inherit;text-decoration:none;">YouTube</a> · <a href="https://x.com/PopcornI81495" target="_blank" style="color:inherit;text-decoration:none;">X</a> · <a href="https://www.threads.com/@popcorninc.music" target="_blank" style="color:inherit;text-decoration:none;">Threads</a> · <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank" style="color:inherit;text-decoration:none;">FaceBook</a> · <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color:inherit;text-decoration:none;">Spotify</a> · <a href="https://www.jiosaavn.com/artist/popcorn-inc.-songs/OXJ7IhWCB8g_" target="_blank" style="color:inherit;text-decoration:none;">JioSaavn</a> · <a href="https://music.apple.com/in/artist/popcorn-inc/1837823770" target="_blank" style="color:inherit;text-decoration:none;">Apple Music</a> · <a href="https://www.instagram.com/popcorninc.music/" target="_blank" style="color:inherit;text-decoration:none;">Instagram</a></div></div>
+
+      <div class="cd-item">
+        <span class="cd-icon">✉️</span>
+        <div class="cd-text">
+          <strong>Email</strong>
+          <span 
+            id="email-copy"
+            onclick="copyEmail()"
+            style="
+              font-size: 1.4rem;
+              font-weight: 700;
+              cursor: pointer;
+              color: inherit;
+              display: inline-block;
+              position: relative;
+            "
+            title="Click to copy"
+          >popcorninc.music@gmail.com</span>
+          <span 
+            id="copy-toast"
+            style="
+              display: none;
+              position: fixed;
+              bottom: 30px;
+              left: 50%;
+              transform: translateX(-50%);
+              background: #222;
+              color: #fff;
+              padding: 10px 22px;
+              border-radius: 8px;
+              font-size: 1rem;
+              font-weight: 600;
+              z-index: 9999;
+              box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+              pointer-events: none;
+            "
+          >📋 Copied to clipboard!</span>
+        </div>
+      </div>
+
+      <div class="cd-item">
+        <span class="cd-icon">🔗</span>
+        <div class="cd-text">
+          <strong>Links</strong>
+          <a href="https://www.instagram.com/popcorninc.music/" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Instagram</a> · 
+          <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Spotify</a> · 
+          <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">YouTube</a> · 
+          <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Facebook</a> · 
+          <a href="https://x.com/PopcornI81495" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">X</a> · 
+          <a href="https://www.threads.com/@popcorninc.music" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Threads</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
 <!-- FOOTER -->
 <footer style="color: black; font-weight: bold;">
   <div class="footer-top">

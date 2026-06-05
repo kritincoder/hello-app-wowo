@@ -172,8 +172,9 @@ nav{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;justify-con
 .yt-card.light .yt-desc{color:rgba(0,0,0,0.38);}
 .yt-card.light:hover{border-color:var(--yd);}
 
-.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:stretch;padding-bottom:0;}
-.works-grid > a{min-height:380px;display:flex;flex-direction:column;}
+.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:stretch;padding-bottom:0;}
+.works-grid > a{min-height:460px;display:flex;flex-direction:column;}
+.works-grid .yt-thumb{min-height:260px;}
 .works-grid::-webkit-scrollbar{display:none;}
 
 /* REELS */
@@ -207,7 +208,15 @@ nav{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;justify-con
   align-items:center;
   justify-content:center;
   border:2px solid rgba(251,201,3,0.1);
+  z-index:0;
 }
+
+.reel-bg img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* Hide emoji fallback and central play button on reel cards */
+.reel-card > [style*="font-size:3rem"]{display:none!important;}
+.reel-card svg{display:none!important;}
+.reel-card > [style*="inset:0;display:flex;align-items:center;justify-content:center;"]{display:none!important;}
 
 /* (optional) keep emoji fallback if no image */
 .reel-emoji{
@@ -286,26 +295,17 @@ nav{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;justify-con
 #contact{padding:120px 64px;background:var(--wht);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
 .contact-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.5vw,5.8rem);color:var(--blk);line-height:0.9;margin-bottom:18px;}
 .contact-sub{font-size:0.96rem;line-height:1.8;color:rgba(0,0,0,0.58);font-weight:300;margin-bottom:24px;}
-.contact-details{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.cd-item{display:flex;align-items:flex-start;gap:10px;font-size:0.82rem;color:rgba(0,0,0,0.65);}
+.contact-details{display:flex;flex-direction:row;gap:60px;margin-bottom:28px;align-items:flex-start;flex-wrap:wrap;}
+.cd-item{display:flex;align-items:flex-start;gap:10px;font-size:0.82rem;color:rgba(0,0,0,0.65);flex:1;min-width:280px;}
 .cd-icon{font-size:1rem;flex-shrink:0;}
+.cd-text{display:flex;flex-direction:column;gap:0.45rem;}
 .cd-text strong{display:block;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:2px;}
-.cd-text a{margin-right:1rem;display:inline-block;color:inherit;text-decoration:none;}
-.cd-text a:hover{text-decoration:underline;}
+.cd-links{display:flex;flex-wrap:nowrap;gap:0.85rem;overflow-x:auto;white-space:nowrap;padding-bottom:0.2rem;}
+.cd-links a{white-space:nowrap;color:inherit;text-decoration:none;font-size:1.2rem;}
+.cd-links a:hover{text-decoration:underline;}
+.cd-links a:not(:last-child)::after{content:'·';margin-left:0.75rem;color:rgba(0,0,0,0.45);}
 
-/* FOOTER */
-footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,0.07);}
-.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;}
-.foot-brand{display:flex;flex-direction:column;gap:6px;}
-.foot-logo img{height:82px;width:auto;max-width:340px;}
-.foot-tag{font-size:0.54rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.22);}
-.foot-address{font-size:0.72rem;color:rgba(255,255,255,0.2);line-height:1.7;margin-top:8px;}
-.foot-socials{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
-.foot-socials a{border:1px solid rgba(255,255,255,0.08);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.9);text-decoration:none;font-size:0.82rem;padding:8px 14px;transition:all 0.2s;}
-.foot-socials a:hover{background:var(--y);color:var(--blk);border-color:var(--y);}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:20px;display:flex;justify-content:space-between;align-items:center;}
-.foot-copy{font-size:0.65rem;color:rgba(255,255,255,0.14);}
-.foot-made{font-size:0.62rem;color:rgba(255,255,255,0.1);}
+footer{display:none!important;}
 
 /* FADE-IN */
 .fade-in{opacity:0;transform:translateY(32px);transition:opacity 0.85s ease,transform 0.85s ease;}
@@ -324,9 +324,6 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
   .works-grid{grid-template-columns:1fr;}
   .reels-row{grid-template-columns:1fr 1fr;}
   #contact{grid-template-columns:1fr;padding:80px 24px;}
-  footer{padding:36px 24px;}
-  .footer-top{flex-direction:column;gap:24px;}
-  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
   #mascot{width:120px;height:120px;}
 }
 </style>
@@ -394,13 +391,13 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
 <section id="team-2">
   <div class="team-full-page" id="person2">
     <div class="team-card-full">
-      <div class="team-photo"><img src="" id="vinayak-img" alt="Vinayak Chopra"/><div class="team-photo-overlay"></div></div>
       <div class="team-info">
         <div class="team-num">02</div>
         <div class="t-name" id="name2"></div>
         <div class="t-divider"></div>
         <div class="t-bio" id="bio2"></div>
       </div>
+      <div class="team-photo"><img src="" id="vinayak-img" alt="Vinayak Chopra"/><div class="team-photo-overlay"></div></div>
     </div>
   </div>
 </section>
@@ -506,9 +503,9 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
 </script>
 
 <h3 style="margin-top:36px;margin-bottom:18px;font-size:1.2rem;font-weight:700;">Other Works</h3>
-<div class="works-grid fade-in" style="display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:16px;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;">
+<div class="works-grid fade-in">
 
-    <a class="yt-card light" href="https://www.youtube.com/watch?v=Y2K_IBLI5XM" target="_blank" style="flex:0 0 280px;min-width:280px;max-width:280px;text-decoration:none;">
+    <a class="yt-card light" href="https://www.youtube.com/watch?v=Y2K_IBLI5XM" target="_blank" style="text-decoration:none;">
       <div class="yt-thumb" style="padding-bottom:56.25%;position:relative;">
         <img src="https://img.youtube.com/vi/Y2K_IBLI5XM/hqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/Y2K_IBLI5XM/mqdefault.jpg'" alt="Work 1"/>
         <div class="yt-play-ring"><div class="yt-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -517,7 +514,7 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
       <div class="yt-meta"><div class="yt-plat">YouTube</div></div>
     </a>
 
-    <a class="yt-card light" href="https://www.youtube.com/watch?v=-RiFl4f2-9I" target="_blank" style="flex:0 0 280px;min-width:280px;max-width:280px;text-decoration:none;">
+    <a class="yt-card light" href="https://www.youtube.com/watch?v=-RiFl4f2-9I" target="_blank" style="text-decoration:none;">
       <div class="yt-thumb" style="padding-bottom:56.25%;position:relative;">
         <img src="https://img.youtube.com/vi/-RiFl4f2-9I/hqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/-RiFl4f2-9I/mqdefault.jpg'" alt="Work 2"/>
         <div class="yt-play-ring"><div class="yt-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -526,7 +523,7 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
       <div class="yt-meta"><div class="yt-plat">YouTube</div></div>
     </a>
 
-    <a class="yt-card light" href="https://www.youtube.com/watch?v=kuBeBHvZR24" target="_blank" style="flex:0 0 280px;min-width:280px;max-width:280px;text-decoration:none;">
+    <a class="yt-card light" href="https://www.youtube.com/watch?v=kuBeBHvZR24" target="_blank" style="text-decoration:none;">
       <div class="yt-thumb" style="padding-bottom:56.25%;position:relative;">
         <img src="https://img.youtube.com/vi/kuBeBHvZR24/hqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/kuBeBHvZR24/mqdefault.jpg'" alt="Work 3"/>
         <div class="yt-play-ring"><div class="yt-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -535,7 +532,7 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
       <div class="yt-meta"><div class="yt-plat">YouTube</div></div>
     </a>
 
-    <a class="yt-card light" href="https://www.youtube.com/watch?v=WaLrK9OMhzc" target="_blank" style="flex:0 0 280px;min-width:280px;max-width:280px;text-decoration:none;">
+    <a class="yt-card light" href="https://www.youtube.com/watch?v=WaLrK9OMhzc" target="_blank" style="text-decoration:none;">
       <div class="yt-thumb" style="padding-bottom:56.25%;position:relative;">
         <img src="https://img.youtube.com/vi/WaLrK9OMhzc/hqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.src='https://img.youtube.com/vi/WaLrK9OMhzc/mqdefault.jpg'" alt="Work 4"/>
         <div class="yt-play-ring"><div class="yt-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -546,38 +543,44 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
 
 </div>
 
-<div class="reels-row fade-in" style="display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:16px;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;">
+<div class="reels-row fade-in" style="display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:16px;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;align-items:flex-start;">
     <a class="reel-card" href="https://www.instagram.com/reel/DWvZpoSk4_u/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎧</div>
+      <div class="reel-bg"><img src="assets/reels/naina.jpg" alt="Naina Laage Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;"><div style="color:rgba(255,255,255,0.7);font-size:0.7rem;margin-bottom:4px;">📸 Instagram Reel</div><div style="color:white;font-weight:700;font-size:0.9rem;">Naina Laage</div></div>
     </a>
     <a class="reel-card" href="https://www.instagram.com/reel/DY9prirsYd9/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎛️</div>
+      <div class="reel-bg"><img src="https://scontent.cdninstagram.com/v/t51.71878-15/709820926_2027914411450347_2668732452001873726_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=LZBOI0PP9wQQ7kNvwEju9vr&_nc_oc=AdpN_2l4a6y5Jz5JOyk6wt8GlPcRwp1ugtn3Gh0mTONwGApYeSIlk6pD3K8lDcjAuBk&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=W6A7C6mClhMh1Qj1cLoBAw&_nc_ss=7ea02&oh=00_Af8hTLgfILQ3zLoM0yghit1MsDY6d0tAePmvHctqnByarQ&oe=6A280E66" alt="Savera Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;"><div style="color:rgba(255,255,255,0.7);font-size:0.7rem;margin-bottom:4px;">📸 Instagram Reel</div><div style="color:white;font-weight:700;font-size:0.9rem;">Savera</div></div>
     </a>
     <a class="reel-card" href="https://www.instagram.com/popcorninc.music/reel/DXZQXBNBrJl/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🔊</div>
+      <div class="reel-bg"><img src="https://scontent.cdninstagram.com/v/t51.82787-15/671222847_17909252046386669_8092096848543383018_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=100&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=eeUewPMSBrgQ7kNvwHitz8n&_nc_oc=AdrHWYZ0ersoW160OSvwGD1xznoxDpkscJPWPbkRjDhZmYUHj5YhYaJ-HmBniZ_cpEY&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=czmxJ5kwCejdUAflB_KmUw&_nc_ss=7ea02&oh=00_Af9AhmqQL1mVNfe_y9qYqUVsltQ6B0i4npNGHuHb19lrFQ&oe=6A283B2D" alt="Savera Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;"><div style="color:rgba(255,255,255,0.7);font-size:0.7rem;margin-bottom:4px;">📸 Instagram Reel</div><div style="color:white;font-weight:700;font-size:0.9rem;">Savera</div></div>
     </a>
     <a class="reel-card" href="https://www.instagram.com/p/DJD7HuyTvV5/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
+      <div class="reel-bg"><img src="https://scontent.cdninstagram.com/v/t51.75761-15/494729803_18503519215000634_8126519048677618106_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;_nc_aid=0&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=KrH-_Q_az6kQ7kNvwH5QZqa&amp;_nc_oc=AdqibuRQp3YtG0xygQnYi6Cakuc80T3C9k5hQ3mbHODYqicBan4CG_nOUAgNsAEC9_s&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_gid=6LLPk9fqKWkh9Z0j7iIwdQ&amp;_nc_ss=7ea02&amp;oh=00_Af-oinpZWq_r_ODOH3IeBi5LBLVVgFE2fNTAcNaAVC5n_Q&amp;oe=6A2822CF" alt="Behind the Beat Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎶</div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;"><div style="color:rgba(255,255,255,0.7);font-size:0.7rem;margin-bottom:4px;">📸 Instagram Reel</div><div style="color:white;font-weight:700;font-size:0.9rem;">Behind the Beat</div></div>
     </a>
     <a class="reel-card" href="https://www.instagram.com/p/DE9aK9zoEfo/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
+      <div class="reel-bg"><img src="https://scontent.cdninstagram.com/v/t51.75761-15/474197259_18483850675000634_1854965077176213578_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;_nc_aid=0&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Ei7czSJp3XcQ7kNvwEy2kws&amp;_nc_oc=AdpP5gve7-2g3fdMkdpflqydvSd0EkvF7VTNn8LhNP1VZrlOpwsg_8ToL53d3M50NsM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_gid=kLHdoPez5V8GQtZKF-aodQ&amp;_nc_ss=7ea02&amp;oh=00_Af8uPU0J4yx_A5lZA1ZmgDmG3LYB05CxUdyq1IDBSOrpBA&amp;oe=6A28220A" alt="Studio Sessions Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎵</div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;"><div style="color:rgba(255,255,255,0.7);font-size:0.7rem;margin-bottom:4px;">📸 Instagram Reel</div><div style="color:white;font-weight:700;font-size:0.9rem;">Studio Sessions</div></div>
     </a>
     <a class="reel-card" href="https://www.instagram.com/p/DDd1l6LzOHV/" target="_blank" style="flex:0 0 220px;min-width:220px;max-width:220px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;display:block;text-decoration:none;background:#111;">
+      <div class="reel-bg"><img src="https://scontent.cdninstagram.com/v/t51.75761-15/469921832_18476581732000634_2240848195558892533_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;_nc_aid=0&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=OQn4UTBqtR4Q7kNvwF54rMg&amp;_nc_oc=AdpjejuhgK5oavWVVEnD2hMiCQgSxhI2npnDAk8SkCfDQ11z8Vb6V8h3NPep_cPiYMY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_gid=TgO26fZdfh1CyRAQcaoPfQ&amp;_nc_ss=7ea02&amp;oh=00_Af8l8cuOAwH1Xuflvursr-nfOV83HFoqdwBeRym72h6xQA&amp;oe=6A2836E4" alt="Live Vibes Reel" onerror="this.src='https://via.placeholder.com/400x711/111/fff?text=Reel'"/></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎤</div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -634,12 +637,14 @@ footer{background:#fbc903;padding:44px 64px;border-top:1px solid rgba(251,201,3,
         <span class="cd-icon">🔗</span>
         <div class="cd-text">
           <strong>Links</strong>
-          <a href="https://www.instagram.com/popcorninc.music/" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Instagram</a> · 
-          <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Spotify</a> · 
-          <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">YouTube</a> · 
-          <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Facebook</a> · 
-          <a href="https://x.com/PopcornI81495" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">X</a> · 
-          <a href="https://www.threads.com/@popcorninc.music" target="_blank" style="color:inherit;text-decoration:none;font-size:1.2rem;">Threads</a>
+          <div class="cd-links">
+            <a href="https://www.instagram.com/popcorninc.music/" target="_blank">Instagram</a>
+            <a href="https://open.spotify.com/artist/0gpRn0U1orS4HnTwGkpBLY?si=Jjy3Pft4SdSQmosRl5JG-Q" target="_blank">Spotify</a>
+            <a href="https://www.youtube.com/@POPCORNInc.11" target="_blank">YouTube</a>
+            <a href="https://www.facebook.com/profile.php?id=61586260651209" target="_blank">Facebook</a>
+            <a href="https://x.com/PopcornI81495" target="_blank">X</a>
+            <a href="https://www.threads.com/@popcorninc.music" target="_blank">Threads</a>
+          </div>
         </div>
       </div>
 
